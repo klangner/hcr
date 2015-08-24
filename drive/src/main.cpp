@@ -28,14 +28,14 @@ void executeAction(int action){
 }
 
 void setup(void){ 
-  pinMode(13, OUTPUT);  //we'll use the debug LED to output a heartbeat
-  // Serial.begin(19200);      //Set Baud Rate
+  pinMode(13, OUTPUT);
+  Serial.begin(19200);
+  Serial.println("Ready.");
+  digitalWrite(13, HIGH);
 } 
 
 void loop() 
 {
-  digitalWrite(13, HIGH);
   int key = getPressedButton();
   if (key >=0) executeAction(key);
-  digitalWrite(13, LOW);
 }
