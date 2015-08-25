@@ -1,19 +1,7 @@
 #include <Arduino.h>
 #include "driver.hpp"
+#include "constants.h"
 
-// Encode pins
-int ENCODER_RIGHT_A = 2;
-int ENCODER_RIGHT_B = 4;
-int ENCODER_LEFT_A = 3;
-int ENCODER_LEFT_B = 8;
-//Standard PWM DC control
-int E1 = 5;     //M1 Speed Control
-int E2 = 6;     //M2 Speed Control
-int M1 = 4;    //M1 Direction Control
-int M2 = 7;    //M1 Direction Control
-// Robot size
-float WHEEL_BASE = 0.285;
-float WHEEL_RADIUS2 = 0.135;
 
 int rightCount = 0;
 int leftCount = 0;

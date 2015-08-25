@@ -9,3 +9,4 @@ Before building this project it is necessary to clone https://github.com/sudar/A
 
   * Driver module allows setting power to the motors.
   * Added actions to board buttons
+  * Implemented unicycle steering
