@@ -7,16 +7,16 @@ Driver driver;
 
 void executeAction(int action){
   delay(1000);
-  
+
   switch(action){
     case 0:
-      driver.turnLeft(0.5f, 0);
+      driver.turnLeft(0.5f);
       break;
     case 1:
       driver.moveBackward(0.5f);
       break;
     case 2:
-      driver.turnRight(0.5f, 0);
+      driver.turnRight(0.5f);
       break;
     case 3:
       driver.moveForward(1);
@@ -27,14 +27,14 @@ void executeAction(int action){
   driver.stop();
 }
 
-void setup(void){ 
+void setup(void){
   pinMode(13, OUTPUT);
   Serial.begin(19200);
   Serial.println("Ready.");
   digitalWrite(13, HIGH);
-} 
+}
 
-void loop() 
+void loop()
 {
   int key = getPressedButton();
   if (key >=0) executeAction(key);

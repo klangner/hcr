@@ -11,8 +11,13 @@ int E1 = 5;     //M1 Speed Control
 int E2 = 6;     //M2 Speed Control
 int M1 = 4;    //M1 Direction Control
 int M2 = 7;    //M1 Direction Control
+// Robot size
+float WHEEL_BASE = 0.285;
+float WHEEL_RADIUS2 = 0.135;
 
-int r = 0;
+int rightCount = 0;
+int leftCount = 0;
+
 void encoderRight()
 {
   int state = digitalRead(ENCODER_RIGHT_A);
@@ -20,11 +25,10 @@ void encoderRight()
   if(state == HIGH){
     // int val = digitalRead(ENCODER_RIGHT_B);
     // int direction = (val == HIGH);
-    Serial.println(r++);
+    rightCount++;
   }
 }
 
-int l = 0;
 void encoderLeft()
 {
   int state = digitalRead(ENCODER_LEFT_A);
@@ -32,7 +36,7 @@ void encoderLeft()
   if(state == HIGH){
     // int val = digitalRead(ENCODER_RIGHT_B);
     // int direction = (val == HIGH);
-    Serial.println(l++);
+    leftCount++;
   }
 }
 
@@ -45,39 +49,48 @@ Driver::Driver(){
     pinMode(i, OUTPUT);
 }
 
-void Driver::moveForward(float speed){
-  char v = char(255*speed);
-  analogWrite (E1,v);
-  digitalWrite(M1,LOW);
-  analogWrite (E2,v);
-  digitalWrite(M2,LOW);
+void Driver::move(float velocity, float angularVelocity){
+  float velocityRight = (2*velocity+angularVelocity*WHEEL_BASE)/WHEEL_RADIUS2;
+  float velocityLeft = (2*velocity-angularVelocity*WHEEL_BASE)/WHEEL_RADIUS2;
+  if(velocityRight > 0){
+    analogWrite (E1,velocityToPcm(velocityRight));
+    digitalWrite(M1,LOW);
+  }
+  else {
+    analogWrite (E1,velocityToPcm(-velocityRight));
+    digitalWrite(M1,HIGH);
+  }
+  if(velocityLeft > 0){
+    analogWrite (E2,velocityToPcm(velocityLeft));
+    digitalWrite(M2,LOW);
+  }
+  else {
+    analogWrite (E2,velocityToPcm(-velocityLeft));
+    digitalWrite(M2,HIGH);
+  }
 }
 
-void Driver::moveBackward(float speed){
-  char v = char(255*speed);
-  analogWrite (E1,v);
-  digitalWrite(M1,HIGH);
-  analogWrite (E2,v);
-  digitalWrite(M2,HIGH);
+void Driver::moveForward(float velocity){
+  move(velocity, 0);
 }
 
-void Driver::turnLeft(float speed, float radius){
-  char v = char(255*speed);
-  analogWrite (E1,v);
-  digitalWrite(M1,LOW);
-  analogWrite (E2,v);
-  digitalWrite(M2,HIGH);
+void Driver::moveBackward(float velocity){
+  move(-velocity, 0);
 }
 
-void Driver::turnRight(float speed, float radius){
-  char v = char(255*speed);
-  analogWrite (E1,v);
-  digitalWrite(M1,HIGH);
-  analogWrite (E2,v);
-  digitalWrite(M2,LOW);
+void Driver::turnLeft(float angularVelocity){
+  move(0, angularVelocity);
+}
+
+void Driver::turnRight(float angularVelocity){
+  move(0, -angularVelocity);
 }
 
 void Driver::stop(){
   digitalWrite(E1,LOW);
   digitalWrite(E2,LOW);
+}
+
+char Driver::velocityToPcm(float velocity){
+  return char(min(100*velocity, 255));
 }
