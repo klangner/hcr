@@ -7,5 +7,5 @@ Before building this project it is necessary to clone https://github.com/sudar/A
 
 ## What is implemented
 
-  * Driver module allows setting power to the motors.
-  * Added actions to board buttons
+  * Unicycle model for steering robot.
+  * Actions executed by pressing board buttons.
