@@ -2,21 +2,20 @@
 #define __CONSTANTS_H__
 
 // Length of time step in milliseconds
-int DELTA_TIME = 10;
+#define DELTA_TIME 10
 // Encode pins
-int ENCODER_RIGHT_A = 2;
-int ENCODER_RIGHT_B = 4;
-int ENCODER_LEFT_A = 3;
-int ENCODER_LEFT_B = 8;
+#define ENCODER_RIGHT_A 2
+#define ENCODER_RIGHT_B 4
+#define ENCODER_LEFT_A 3
+#define ENCODER_LEFT_B 8
 //Standard PWM DC control
-int E1 = 5;     // Right Speed Control
-int E2 = 6;     // Left Speed Control
-int M1 = 4;    // Right Direction Control
-int M2 = 7;    // Left Direction Control
+#define E1 5
+#define E2 6
+#define M1 4
+#define M2 7
 
 // Robot size in meters.
-float WHEEL_BASE = 0.285;
-float WHEEL_RADIUS2 = 0.135;
-
+#define WHEEL_BASE 0.285f
+#define WHEEL_RADIUS2 0.135f
 
 #endif

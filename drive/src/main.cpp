@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "driver.hpp"
 #include "buttons.h"
+#include "constants.h"
 
 
 Driver driver;
@@ -34,8 +35,10 @@ void setup(void){
   digitalWrite(13, HIGH);
 }
 
-void loop()
-{
+void loop(){
   int key = getPressedButton();
-  if (key >=0) executeAction(key);
+  if(key >=0){
+    executeAction(key);
+  }
+  delay(DELTA_TIME);
 }
