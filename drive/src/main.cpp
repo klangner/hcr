@@ -30,7 +30,7 @@ void executeAction(int action){
 
 void setup(void){
   pinMode(13, OUTPUT);
-  Serial.begin(19200);
+  Serial.begin(57600);
   Serial.println("Ready.");
   digitalWrite(13, HIGH);
 }

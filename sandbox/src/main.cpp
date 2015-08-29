@@ -39,15 +39,36 @@ int getPressedButton(){
 }
 
 
+class Behavior {
+public:
+  virtual void update() = 0;
+};
+
+class WaitBehavior : public Behavior {
+public:
+  WaitBehavior(){
+    Serial.println("Wait");
+  };
+
+  void update() {};
+};
+
+
+Behavior* currentBehavior = NULL;
+int lastTime = 0;
 void setup() {
-  Serial.begin(19200);
+  Serial.begin(57600);
   Serial.println("Ready.");
+  currentBehavior =  new WaitBehavior();
 }
 
 void loop(){
   int key = getPressedButton();
+  Serial.print(millis()-lastTime);
+  lastTime = millis();
+  Serial.println(" (-255,-255), (-255,-255), (-255,-255), (-255,-255)");
   if(key >= 0){
-    Serial.print("Key=");
+    Serial.print(": Key=");
     Serial.println(key);
   }
   delay(10);

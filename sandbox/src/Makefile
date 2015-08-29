@@ -4,7 +4,7 @@ BOARD_TAG    = uno
 ARDUINO_PORT = /dev/ttyACM0
 ARDUINO_DIR  = /home/klangner/bin/arduino-1.6.5
 OBJDIR       = ../build-$(BOARD_TAG)
-MONITOR_BAUDRATE  = 19200
+MONITOR_BAUDRATE  = 57600
 
 ### CFLAGS_STD
 CFLAGS_STD        = -std=gnu11
