@@ -3,17 +3,19 @@ import time
 
 
 def main():
-    romeo = serial.Serial('/dev/ttyACM0', 57600)
+    romeo = serial.Serial('/dev/ttyACM0', 57600, timeout=1)
     count = 0
-    oldLine = ""
+    step = 1;
     while True:
         line = romeo.readline()
-        if len(line) > 0 and line != oldLine:
+        if len(line) > 0:
             print(str(time.time()) + ": " + line)
-            oldLine = line
-        count += 1
-        # if count == 100:
-        #     romeo.write("200 200")
+            count += step
+            if abs(count) > 255:
+                step = -step
+            motors = "%d %d\n" % (count, count)
+            print("Python: " + motors)
+            romeo.write(motors)
 
 
 main()

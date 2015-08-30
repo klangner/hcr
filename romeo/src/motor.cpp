@@ -37,13 +37,13 @@ Motor::Motor(int m, int e, int a, int b){
 
 
 void Motor::setSpeed(int speed){
-  int dir = speed >=0;
+  bool dir = speed >=0;
   if(dir != currentDirection){
     if(dir) digitalWrite(pinM,LOW);
     else digitalWrite(pinM,HIGH);
     currentDirection = dir;
   }
-  char level = char(max(255, abs(speed)));
+  char level = char(min(255, abs(speed)));
   analogWrite (pinE, level);
 }
 

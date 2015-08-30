@@ -2,7 +2,7 @@
 #include "motor.h"
 
 
-const int DELTA_TIME = 10;
+const int DELTA_TIME = 50;
 Motor* leftMotor;
 Motor* rightMotor;
 
@@ -20,16 +20,19 @@ void sendState(int l, int r){
 }
 
 void updateMotors(){
-  if(Serial.available()){
-    int left = Serial.parseInt();
-    int right = Serial.parseInt();
-    leftMotor->setSpeed(left);
-    rightMotor->setSpeed(right);
+  String text = Serial.readStringUntil('\n');
+  if(text.length() > 0){
+    int i = text.indexOf(' ');
+    if(i > 0){
+      int left = text.substring(0, i).toInt();
+      int right = text.substring(i+1).toInt();
+      leftMotor->setSpeed(left);
+      rightMotor->setSpeed(right);
+    }
   }
 }
 
-
-void setup(void){
+void setup(){
   Serial.begin(57600);
   Serial.println("Ready.");
   leftMotor = new Motor(7, 6, 3, 9);
