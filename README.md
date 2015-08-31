@@ -7,5 +7,6 @@ Before building this project it is necessary to clone https://github.com/sudar/A
 
 ## What is implemented
 
-  * Unicycle model for steering robot.
-  * Actions executed by pressing board buttons.
+  * Sending sensor data via Serial port
+  * Receive motor speed via serial
+  * Calculate robot position from odometry
