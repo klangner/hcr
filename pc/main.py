@@ -30,24 +30,36 @@ def main():
     reset()
     hcr = openConnection()
     count = 0
-    step = 1;
     state = RobotState(0, 0, 0)
+    expected_no_ticks = 40  # speed should be around 80
+    ul = 0
+    ur = 0
     while True:
         line = hcr.readline()
         if len(line) > 0:
             (l,r) = parseState(line)
             state = state.updateState(l, r)
+            print(line.strip())
             print(str(time.time()) + ": " + state.toString())
-            count += step
-            if abs(count) > 255:
+            count += 1
+            if count > 255:
                 break
-            hcr.write("%d %d\n" % (count, count))
+            ul = pid(expected_no_ticks, l, ul) # 80
+            ur = pid(expected_no_ticks, r, ur)
+            cmd = "%d %d\n" % (ul, ur)
+            print("Set speed: " + cmd)
+            hcr.write(cmd)
 
 def parseState(line):
     ns = line.strip()[1:-1].split(",")
     if len(ns) == 2:
         return (int(ns[0]), int(ns[1]))
     return (0,0)
+
+def pid(expected, actual, speed):
+    kp = 1 #3.4
+    u = max(speed+kp*(expected-actual), 0)
+    return min(u, 255)
 
 def openConnection():
     return serial.Serial('/dev/ttyACM0', 57600, timeout=1)
